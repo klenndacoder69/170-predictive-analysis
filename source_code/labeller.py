@@ -30,7 +30,7 @@ sia = SentimentIntensityAnalyzer()
 # Iterate over all the files in the directory
 for file_path in os.listdir('../data'):
     # The filename will be used later for outputting where to put the file
-    filename = file_path.split('_')[-1].split('.')[0]
+    category = file_path.split('_')[-1].split('.')[0]
     # Load the Excel file
     df = pd.read_excel('../data/' + file_path)
 
@@ -38,7 +38,7 @@ for file_path in os.listdir('../data'):
     df['Sentiment'] = df.apply(lambda row: get_sentiment(f"{row['Title']} {row['Body']}"), axis=1)
 
     # Save the updated file
-    output_file_path = f'../labelled_data/sentiment_{filename}.xlsx'  # Output file name
+    output_file_path = f'../labelled_data/sentiment_{category}.xlsx'  # Output file name
     df.to_excel(output_file_path, index=False)
 
     print(f"Sentiment analysis completed. File saved to {output_file_path}.")

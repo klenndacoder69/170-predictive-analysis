@@ -14,7 +14,7 @@ from datasets import Dataset
 import torch
 
 # Directory paths
-LABELLED_DATA_DIR = "../labelled_data"
+LABELLED_DATA_DIR = "../train_and_test/train"
 
 # 1. Load the labeled data
 def load_labelled_data(directory):
@@ -66,8 +66,9 @@ def train_sentiment_analyzer(data):
     })
 
     # Define model
-    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2)
-
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2).to(device)
+    print(f"Using device: {device}")
     # Define Trainer
     training_args = TrainingArguments(
         output_dir="./results",
